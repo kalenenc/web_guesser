@@ -24,5 +24,5 @@ def check_guess(guess)
 		else "pants pants pants"
  	end 
 end
-
+ 
 
