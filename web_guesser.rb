@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 SECRET_NUM = rand(101)
+cheat_mode = ""
 message = "Guess a secret number between 0 and 100!"
 end_message = ""
 guess_int = nil
@@ -9,7 +10,10 @@ background = 'white'
 @@remaining_guesses = 5
 
 get '/' do 
-	erb :index, :locals => {:number => SECRET_NUM, :message => message, :end_message => end_message, :background => background, :remaining => @@remaining_guesses} 
+	erb :index, :locals => {:number => SECRET_NUM, :cheat_mode => cheat_mode, :message => message, :end_message => end_message, :background => background, :remaining => @@remaining_guesses} 
+  if params['cheat'] == "true"
+  	cheat_mode = "Here you go, cheater: #{SECRET_NUM}"
+  end
   if params['guess'] != nil
   	end_message = ""
   	guess_int = params['guess'].to_i
@@ -22,14 +26,22 @@ get '/' do
   			background = '#A00000' 
   		end
   		if message == "Yes! The secret number is #{SECRET_NUM}"
+  			if cheat_mode != ""
+  				end_message = "But you cheated, so who cares."
+  				params['cheat'] = false
+  				cheat_mode = ""
+  			else
   			end_message = "Play again!"
+  			params['cheat'] = false
+  			cheat_mode = ""
+  			end
   		end
   		@@remaining_guesses = 5
   		SECRET_NUM = rand(101) 
   		
   	end
 	end
-  erb :index, :locals => {:number => SECRET_NUM, :guess => guess_int, :message => message, :end_message => end_message, :background => background, :remaining => @@remaining_guesses}
+  erb :index, :locals => {:number => SECRET_NUM, :cheat_mode => cheat_mode, :guess => guess_int, :message => message, :end_message => end_message, :background => background, :remaining => @@remaining_guesses}
 end 
 
 def check_guess(guess)
