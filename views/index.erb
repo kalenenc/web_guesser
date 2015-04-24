@@ -15,11 +15,16 @@
       	font-size: 45px;
       }
 
+      h3 {
+        font-family: Garamound, sans-serif;
+        color: #484848;
+      }
+
       form input[type=text] {
-      	width: 125px;
+      	width: 118px;
 				font-size: 32px;
 				line-height: 32px;
-				font-color: green;
+        text-align: center;
       }
 
       form input[type=submit] {
@@ -43,6 +48,12 @@
   		<input type='text' name='guess' />
   		<input type='submit' value='Guess!' /></div>
 		</form>
+		<h3>
+		You have <%= remaining %> guesses left.
+	</h3>
+   <h1>
+      <%= end_message %>
+    </h1>
 	</div>
 	</body>
 	</html>

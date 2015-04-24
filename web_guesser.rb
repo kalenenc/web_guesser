@@ -3,17 +3,33 @@ require 'sinatra/reloader'
 
 SECRET_NUM = rand(101)
 message = "Guess a secret number between 0 and 100!"
+end_message = ""
 guess_int = nil
 background = 'white'
+@@remaining_guesses = 5
 
 get '/' do 
-	erb :index, :locals => {:number => SECRET_NUM, :message => message, :background => background} 
+	erb :index, :locals => {:number => SECRET_NUM, :message => message, :end_message => end_message, :background => background, :remaining => @@remaining_guesses} 
   if params['guess'] != nil
+  	end_message = ""
   	guess_int = params['guess'].to_i
   	message = check_guess(guess_int)
   	background = check_message(message)
+  	@@remaining_guesses -= 1 
+  	if @@remaining_guesses == 0 || message == "Yes! The secret number is #{SECRET_NUM}"
+  		if message != "Yes! The secret number is #{SECRET_NUM}"
+  			end_message = "YOU LOSE!  The secret number has changed."
+  			background = '#A00000' 
+  		end
+  		if message == "Yes! The secret number is #{SECRET_NUM}"
+  			end_message = "Play again!"
+  		end
+  		@@remaining_guesses = 5
+  		SECRET_NUM = rand(101) 
+  		
+  	end
 	end
-  erb :index, :locals => {:number => SECRET_NUM, :guess => guess_int, :message => message, :background => background}
+  erb :index, :locals => {:number => SECRET_NUM, :guess => guess_int, :message => message, :end_message => end_message, :background => background, :remaining => @@remaining_guesses}
 end 
 
 def check_guess(guess)
