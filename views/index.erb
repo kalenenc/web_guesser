@@ -1,14 +1,48 @@
 <html>
-	<head></head>
+	<head>
+		<style>
+      body {
+        background-color: <%= background %>;
+      }
+
+      .container {
+      	margin-top: 200px;
+      	text-align: center;
+      }
+
+      h1 {
+      	font-family: Garamound, sans-serif;
+      	font-size: 45px;
+      }
+
+      form input[type=text] {
+      	width: 125px;
+				font-size: 32px;
+				line-height: 32px;
+				font-color: green;
+      }
+
+      form input[type=submit] {
+      	height: 40px;
+      	font-size: 30px;
+      	text-align: auto;
+      	margin-left: 12px;
+      }
+
+      .form-stuff {
+      	position: static;
+      }
+    </style>
+	</head>
 	<body>
-		<form>
-  		<input type='text' name='guess' />
-  		<input type='submit' value='Guess!' />
-		</form>
-		<p>
+		<div class="container">
+		<h1>
 			<%= message %>
-		</p>
-		<p>
-		</p>
+		</h1>
+		<form><div class="form-stuff">
+  		<input type='text' name='guess' />
+  		<input type='submit' value='Guess!' /></div>
+		</form>
+	</div>
 	</body>
 	</html>
